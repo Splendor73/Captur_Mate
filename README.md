@@ -1,5 +1,3 @@
-To optimize the README for GitHub search results and include the author's name, here’s an updated version:
-
 ---
 
 # CapturMate
@@ -124,7 +122,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 - GitHub: [@Splendor73](https://github.com/Splendor73)
 - LinkedIn: [Yashu Patel](https://www.linkedin.com/in/yashu-patel)
 
-## Keywords tecchnology
+## Keywords / Technology
 
 - Swift OCR
 - macOS Vision framework
