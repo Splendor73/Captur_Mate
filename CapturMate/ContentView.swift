@@ -4,15 +4,26 @@ struct ContentView: View {
     @StateObject private var viewModel = TextRecognitionViewModel()
 
     var body: some View {
-        HStack(alignment: .top) {
-            VStack {
+        HStack(alignment: .top, spacing: 20) {
+            // Image Section
+            VStack(spacing: 16) {
+                // Image Heading
+                HStack {
+                    Text("Image")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.leading, 45)
+                    Spacer()
+                }
+
+                // Image Display
                 if let imageURL = viewModel.selectedImageURL, let nsImage = NSImage(contentsOf: imageURL) {
                     ZStack(alignment: .topTrailing) {
                         Image(nsImage: nsImage)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 300, height: 300)
-                            .cornerRadius(10)
+                            .frame(width: 320, height: 300)
+                            .cornerRadius(12)
                             .shadow(radius: 10)
 
                         Button(action: {
@@ -29,65 +40,83 @@ struct ContentView: View {
                 } else {
                     Text("No image selected")
                         .foregroundColor(.gray)
-                        .frame(width: 300, height: 300)
+                        .frame(width: 320, height: 300)
                         .background(Color.black.opacity(0.1))
-                        .cornerRadius(10)
+                        .cornerRadius(12)
                         .shadow(radius: 10)
-                        .padding()
+                        .padding(.horizontal, 20)
                 }
-                
 
-                Button(action: {
-                    viewModel.selectImage()
-                }) {
-                    Text("Select Window")
-                        .font(.headline)
-                        .frame(width: 150, height: 50)
-                        .background(
-                            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                           startPoint: .leading, endPoint: .trailing)
-                        )
-                        .foregroundColor(.white)
-                        .cornerRadius(30)
-                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
+                // Action Buttons
+                HStack(spacing: 20) {
+                    Button(action: {
+                        viewModel.selectImage()
+                    }) {
+                        Text("Select Window")
+                            .font(.headline)
+                            .frame(width: 150, height: 50)
+                            .background(
+                                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                               startPoint: .leading, endPoint: .trailing)
+                            )
+                            .foregroundColor(.white)
+                            .cornerRadius(25)
+                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 3)
+                    }
+                    .buttonStyle(.borderless)
+
+                    Button(action: {
+                        copyTextToClipboard()
+                    }) {
+                        Text("Copy Text")
+                            .font(.headline)
+                            .frame(width: 150, height: 50)
+                            .background(
+                                LinearGradient(gradient: Gradient(colors: [Color.green, Color.teal]),
+                                               startPoint: .leading, endPoint: .trailing)
+                            )
+                            .foregroundColor(.white)
+                            .cornerRadius(25)
+                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 3)
+                    }
+                    .buttonStyle(.borderless)
                 }
-                .buttonStyle(.borderless)
-                .padding(.top, 20)
-
+                .padding(.top, 10)
             }
             .padding()
+            .frame(minWidth: 400)
 
-            VStack {
+            Divider()
+                .background(Color.gray.opacity(0.3))
+
+            // Text Section
+            VStack(spacing: 16) {
+                // Text Heading
+                HStack {
+                    Text("Extracted Text")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.leading, 20)
+                    Spacer()
+                }
+
+                // Text Display
                 ScrollView {
                     Text(viewModel.extractedText.isEmpty ? "No text extracted" : viewModel.extractedText)
+                        .font(.system(.body, design: .monospaced))
+                        .foregroundColor(Color.primary)
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 5)
-                        .foregroundColor(.black)
+                        .cornerRadius(12)
+                        .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
+                        .padding(10)
                 }
-                .frame(width: 350, height: 300)
-                .padding()
-
-                Button(action: {
-                    copyTextToClipboard()
-                }) {
-                    Text("Copy to Clipboard")
-                        .font(.headline)
-                        .frame(width: 150, height: 50)
-                        .background(
-                            LinearGradient(gradient: Gradient(colors: [Color.green, Color.teal]),
-                                           startPoint: .leading, endPoint: .trailing)
-                        )
-                        .foregroundColor(.white)
-                        .cornerRadius(30)
-                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-                }
-                .buttonStyle(.borderless)
-                .padding(.top, 20)
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(12)
+                .shadow(radius: 8)
             }
             .padding()
+            .frame(minWidth: 400)
         }
         .padding()
         .background(Color.gray.opacity(0.1).ignoresSafeArea())
