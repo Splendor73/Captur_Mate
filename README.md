@@ -124,7 +124,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 - GitHub: [@Splendor73](https://github.com/Splendor73)
 - LinkedIn: [Yashu Patel](https://www.linkedin.com/in/yashu-patel)
 
-## Keywords for GitHub Search Optimization
+## Keywords tecchnology
 
 - Swift OCR
 - macOS Vision framework
@@ -134,7 +134,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 - CapturMate
 - Swift macOS app
 
-Adding these keywords and using them in the README helps to optimize the repository for GitHub searches.
 
 ## Acknowledgements
 
