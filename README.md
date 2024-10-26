@@ -139,5 +139,3 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 - **Swift Community** for helpful resources and guidance.
 
 ---
-
-Make sure to include relevant keywords, technologies used, and links to make it easy for others to find and use your project. Let me know if you need any more help!
