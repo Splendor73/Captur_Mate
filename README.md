@@ -21,7 +21,7 @@ CapturMate is a macOS application developed by **Yashu Patel**, designed to help
 
 ## Screenshots
 
-> <img width="1012" alt="image" src="https://github.com/user-attachments/assets/9a4921de-6ca6-4fb7-9a99-e56a0ca2da4f">
+> <img width="985" alt="image" src="https://github.com/user-attachments/assets/0abe7a86-2a9b-4e0c-8b74-436b4eb80d76">
 
 > <img width="1012" alt="image" src="https://github.com/user-attachments/assets/87161a2d-f930-4a13-aac6-d811a742f03b">
 
