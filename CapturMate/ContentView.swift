@@ -7,13 +7,26 @@ struct ContentView: View {
         HStack(alignment: .top, spacing: 20) {
             // Image Section
             VStack(spacing: 16) {
-                // Image Heading
+                // Image Heading with Paste Icon Button
                 HStack {
                     Text("Image")
                         .font(.title2)
                         .fontWeight(.bold)
                         .padding(.leading, 45)
                     Spacer()
+                    
+                    // Paste Button with Icon
+                    Button(action: {
+                        pasteImageFromClipboard()
+                    }) {
+                        Image(systemName: "doc.on.clipboard")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.blue)
+                    }
+                    .buttonStyle(.borderless)
+                    .padding(.trailing, 10)
+                    .help("Paste Image from Clipboard")
                 }
 
                 // Image Display
@@ -120,6 +133,41 @@ struct ContentView: View {
         }
         .padding()
         .background(Color.gray.opacity(0.1).ignoresSafeArea())
+    }
+    
+    private func pasteImageFromClipboard() {
+        let pasteboard = NSPasteboard.general
+        if let image = pasteboard.readObjects(forClasses: [NSImage.self], options: nil)?.first as? NSImage {
+            // Clear any existing image data
+            viewModel.selectedImageURL = nil
+            viewModel.extractedText = ""
+
+            // Save the NSImage as a temporary file
+            let tempDirectory = FileManager.default.temporaryDirectory
+            let tempFileURL = tempDirectory.appendingPathComponent("pasted_image.png")
+
+            if let tiffData = image.tiffRepresentation,
+               let bitmapImage = NSBitmapImageRep(data: tiffData),
+               let pngData = bitmapImage.representation(using: .png, properties: [:]) {
+                do {
+                    try pngData.write(to: tempFileURL)
+                    // Use the temporary file URL as if it were selected from the file system
+                    viewModel.recognizeTextFromImage(at: tempFileURL)
+                    
+                    // Delete the temporary file after processing
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 5) {
+                        do {
+                            try FileManager.default.removeItem(at: tempFileURL)
+                            print("Temporary file deleted: \(tempFileURL)")
+                        } catch {
+                            print("Error deleting temporary file: \(error)")
+                        }
+                    }
+                } catch {
+                    print("Error saving pasted image: \(error)")
+                }
+            }
+        }
     }
 
     private func copyTextToClipboard() {
