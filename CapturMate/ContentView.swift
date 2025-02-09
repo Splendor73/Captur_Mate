@@ -104,25 +104,35 @@ struct ContentView: View {
 
             // Text Section
             VStack(spacing: 16) {
-                // Text Heading
                 HStack {
                     Text("Extracted Text")
                         .font(.title2)
                         .fontWeight(.bold)
                         .padding(.leading, 20)
                     Spacer()
+                    
+                    // Add format toggle button
+                    Button(action: {
+                        viewModel.isWrappedText.toggle()
+                    }) {
+                        Image(systemName: viewModel.isWrappedText ? "text.wrap" : "text.alignleft")
+                            .foregroundColor(.blue)
+                    }
+                    .buttonStyle(.borderless)
+                    .help(viewModel.isWrappedText ? "Switch to Single Line" : "Switch to Wrapped Text")
+                    .padding(.trailing, 20)
                 }
 
-                // Text Display
-                ScrollView {
+                // Improved Text Display
+                ScrollView([.vertical, .horizontal]) {
                     Text(viewModel.extractedText.isEmpty ? "No text extracted" : viewModel.extractedText)
                         .font(.system(.body, design: .monospaced))
                         .foregroundColor(Color.primary)
+                        .lineLimit(viewModel.isWrappedText ? nil : 1)
+                        .textSelection(.enabled)
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .cornerRadius(12)
-                        .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
-                        .padding(10)
                 }
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(12)
@@ -173,6 +183,11 @@ struct ContentView: View {
     private func copyTextToClipboard() {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
-        pasteboard.setString(viewModel.extractedText, forType: .string)
+        // Remove any extra line breaks and normalize spacing
+        let formattedText = viewModel.isWrappedText ? 
+            viewModel.extractedText : 
+            viewModel.extractedText.replacingOccurrences(of: "\n", with: " ")
+                .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
+        pasteboard.setString(formattedText, forType: .string)
     }
 }

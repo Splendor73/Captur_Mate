@@ -5,6 +5,7 @@ class TextRecognitionViewModel: ObservableObject {
     @Published var extractedText: String = ""
     @Published var selectedImageURL: URL?
     @Published var isProcessing: Bool = false
+    @Published var isWrappedText: Bool = true
 
     // Function to select an image from the file system
     func selectImage() {
