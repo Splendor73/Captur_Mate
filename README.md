@@ -92,7 +92,7 @@ MIT License — see `LICENSE` file for details.
 **Yashu Patel**
 
 - GitHub: [@Splendor73](https://github.com/Splendor73)
-- LinkedIn: [Yashu Patel](https://www.linkedin.com/in/yashu-patel)
+- LinkedIn: [Yashu Patel](https://www.linkedin.com/in/patel-yashu/)
 
 ---
 
